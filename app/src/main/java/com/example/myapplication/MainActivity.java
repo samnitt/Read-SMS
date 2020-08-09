@@ -11,6 +11,8 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,14 +24,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        registerReceiver(broadcastReceiver, new IntentFilter("Transfer"));
-        registerReceiver(broadcastReceiver1, new IntentFilter("Transfer1"));
+
+        registerReceiver (broadcastReceiver, new IntentFilter("Transfer"));
+        registerReceiver (broadcastReceiver1, new IntentFilter("Transfer1"));
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.RECEIVE_SMS)
         != PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS},1000);
 
         }
+
+        Button button = findViewById(R.id.nameService);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startService(new Intent(getApplicationContext(),MyService.class));
+            }
+        });
+
 
         }
 
